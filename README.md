@@ -24,6 +24,8 @@ The frontend uses a lightweight feature-sliced structure:
 
 See [docs/architecture.md](docs/architecture.md) for import rules and conventions.
 
+The MVP1 parser/UI contract is documented in [docs/data-contract.md](docs/data-contract.md).
+
 ## Scripts
 
 - `npm run dev` starts the local app on `127.0.0.1:4173`
