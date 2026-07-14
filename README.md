@@ -26,6 +26,8 @@ See [docs/architecture.md](docs/architecture.md) for import rules and convention
 
 The MVP1 parser/UI contract is documented in [docs/data-contract.md](docs/data-contract.md).
 
+The glass UI foundation is documented in [docs/visual-system.md](docs/visual-system.md).
+
 ## Scripts
 
 - `npm run dev` starts the local app on `127.0.0.1:4173`

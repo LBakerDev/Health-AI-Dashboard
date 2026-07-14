@@ -1,0 +1,154 @@
+:root {
+  color-scheme: light;
+
+  --font-sans:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Display',
+    'Segoe UI', sans-serif;
+
+  --color-ink: #142033;
+  --color-ink-soft: #3d4961;
+  --color-ink-muted: #63708a;
+  --color-ink-inverse: #ffffff;
+
+  --color-page: #f4f7fb;
+  --color-page-tint: #eef6f3;
+  --color-surface: rgba(255, 255, 255, 0.76);
+  --color-surface-strong: rgba(255, 255, 255, 0.88);
+  --color-surface-muted: rgba(255, 255, 255, 0.52);
+  --color-border: rgba(255, 255, 255, 0.72);
+  --color-border-muted: rgba(129, 144, 172, 0.22);
+
+  --color-accent: #4f6ef7;
+  --color-accent-strong: #3554df;
+  --color-fitness: #12a874;
+  --color-cardio: #139ec4;
+  --color-energy: #ff8b5c;
+  --color-attention: #d89a26;
+  --color-danger: #d94c69;
+  --color-neutral: #69758c;
+
+  --signal-good: var(--color-fitness);
+  --signal-good-bg: rgba(18, 168, 116, 0.13);
+  --signal-neutral: var(--color-neutral);
+  --signal-neutral-bg: rgba(105, 117, 140, 0.13);
+  --signal-bad: var(--color-danger);
+  --signal-bad-bg: rgba(217, 76, 105, 0.13);
+
+  --gradient-page:
+    radial-gradient(circle at 18% 14%, rgba(126, 185, 255, 0.5), transparent 32rem),
+    radial-gradient(circle at 86% 10%, rgba(156, 224, 196, 0.45), transparent 30rem),
+    radial-gradient(circle at 78% 78%, rgba(255, 179, 141, 0.36), transparent 34rem),
+    linear-gradient(145deg, #f8fbff 0%, #eef6f3 48%, #fff4ef 100%);
+  --gradient-brand: linear-gradient(135deg, #4f6ef7 0%, #139ec4 46%, #12a874 100%);
+  --gradient-insight: linear-gradient(
+    135deg,
+    rgba(79, 110, 247, 0.18),
+    rgba(18, 168, 116, 0.14) 46%,
+    rgba(255, 139, 92, 0.12)
+  );
+
+  --glass-bg: rgba(255, 255, 255, 0.54);
+  --glass-bg-strong: rgba(255, 255, 255, 0.74);
+  --glass-bg-subtle: rgba(255, 255, 255, 0.34);
+  --glass-border: rgba(255, 255, 255, 0.74);
+  --glass-highlight: rgba(255, 255, 255, 0.72);
+  --glass-blur: 28px;
+  --glass-saturate: 170%;
+
+  --shadow-glass:
+    0 22px 60px rgba(38, 52, 84, 0.16), 0 6px 18px rgba(38, 52, 84, 0.09),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82);
+  --shadow-glass-hover:
+    0 30px 78px rgba(38, 52, 84, 0.21), 0 10px 26px rgba(38, 52, 84, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  --shadow-focus: 0 0 0 3px rgba(244, 247, 251, 0.95), 0 0 0 5px rgba(79, 110, 247, 0.5);
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+
+  --radius-xs: 0.5rem;
+  --radius-sm: 0.75rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.25rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 1.75rem;
+  --radius-pill: 999px;
+
+  --duration-fast: 140ms;
+  --duration-base: 220ms;
+  --duration-slow: 420ms;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-spring: cubic-bezier(0.2, 0.9, 0.18, 1);
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --color-ink: #f2f5ff;
+  --color-ink-soft: #b3bad9;
+  --color-ink-muted: #7f87aa;
+  --color-ink-inverse: #0f1724;
+
+  --color-page: #03061a;
+  --color-page-tint: #0b1230;
+  --color-surface: rgba(63, 65, 135, 0.48);
+  --color-surface-strong: rgba(52, 55, 118, 0.72);
+  --color-surface-muted: rgba(34, 36, 82, 0.48);
+  --color-border: rgba(166, 174, 255, 0.34);
+  --color-border-muted: rgba(166, 174, 255, 0.18);
+
+  --color-accent: #7d80ff;
+  --color-accent-strong: #8195ff;
+  --color-fitness: #4ad39d;
+  --color-cardio: #52c7e4;
+  --color-energy: #ffa274;
+  --color-attention: #edbb4d;
+  --color-danger: #f1748d;
+  --color-neutral: #a5aec4;
+
+  --signal-good-bg: rgba(74, 211, 157, 0.14);
+  --signal-neutral-bg: rgba(165, 174, 196, 0.14);
+  --signal-bad-bg: rgba(241, 116, 141, 0.14);
+
+  --gradient-page:
+    radial-gradient(circle at 4% 0%, rgba(36, 71, 158, 0.66), transparent 34rem),
+    radial-gradient(circle at 92% 2%, rgba(91, 42, 162, 0.66), transparent 38rem),
+    radial-gradient(circle at 77% 96%, rgba(15, 110, 122, 0.5), transparent 36rem),
+    radial-gradient(circle at 100% 100%, rgba(110, 113, 201, 0.42), transparent 34rem),
+    linear-gradient(145deg, #030617 0%, #05031a 47%, #060416 100%);
+  --gradient-brand: linear-gradient(135deg, #806cff 0%, #7e73ff 52%, #51ddc3 100%);
+  --gradient-insight: linear-gradient(
+    135deg,
+    rgba(104, 101, 199, 0.8),
+    rgba(65, 64, 148, 0.76) 54%,
+    rgba(39, 44, 117, 0.78)
+  );
+
+  --glass-bg: rgba(27, 29, 68, 0.58);
+  --glass-bg-strong: rgba(58, 61, 127, 0.68);
+  --glass-bg-subtle: rgba(39, 42, 90, 0.46);
+  --glass-border: rgba(171, 179, 255, 0.28);
+  --glass-highlight: rgba(255, 255, 255, 0.12);
+
+  --shadow-glass:
+    0 30px 80px rgba(0, 0, 0, 0.42), 0 9px 22px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  --shadow-glass-hover:
+    0 36px 94px rgba(0, 0, 0, 0.5), 0 12px 30px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  --shadow-focus: 0 0 0 3px rgba(16, 23, 35, 0.95), 0 0 0 5px rgba(127, 152, 255, 0.55);
+}
+
+@media (max-width: 640px) {
+  :root {
+    --glass-blur: 18px;
+    --radius-2xl: 1.35rem;
+  }
+}

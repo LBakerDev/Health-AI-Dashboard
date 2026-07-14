@@ -1,0 +1,1 @@
+export { TrendBadge } from './TrendBadge';

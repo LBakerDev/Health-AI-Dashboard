@@ -1,1 +1,1 @@
-export {};
+export { WeeklySummaryView } from './WeeklySummaryView';
