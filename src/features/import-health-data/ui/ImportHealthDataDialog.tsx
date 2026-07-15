@@ -1,6 +1,6 @@
-import { FileArchive, Lock, X } from 'lucide-react';
-
-import { Button, GlassSurface } from '@shared/ui';
+import { Button } from '@shared/ui/button';
+import { GlassSurface } from '@shared/ui/glass-surface';
+import { FileArchive, Lock, X } from '@shared/ui/icons';
 
 interface ImportHealthDataDialogProps {
   onClose: () => void;

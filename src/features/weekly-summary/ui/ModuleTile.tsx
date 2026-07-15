@@ -1,16 +1,16 @@
 import type { ReactNode } from 'react';
-import type { ComponentType } from 'react';
-import type { LucideProps } from 'lucide-react';
-import { ArrowRight } from 'lucide-react';
 
-import { GlassSurface, TrendBadge } from '@shared/ui';
 import type { TrendSignal } from '@entities/health-metric';
+import { GlassSurface } from '@shared/ui/glass-surface';
+import { ArrowRight } from '@shared/ui/icons';
+import type { LucideIcon } from '@shared/ui/icons';
+import { TrendBadge } from '@shared/ui/trend-badge';
 
 interface ModuleTileProps {
   actionLabel?: string;
   detail: string;
   disabled?: boolean;
-  icon: ComponentType<LucideProps>;
+  icon: LucideIcon;
   onClick?: () => void;
   progress?: number;
   progressLabel?: string;

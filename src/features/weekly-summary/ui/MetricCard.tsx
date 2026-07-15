@@ -1,13 +1,12 @@
-import type { ComponentType } from 'react';
-import type { LucideProps } from 'lucide-react';
-
 import type { DailyActivityPoint, HealthMetric, WorkoutSession } from '@entities/health-metric';
 import { formatMetricUnit, formatMetricValue } from '@shared/lib';
-import { GlassSurface, TrendBadge } from '@shared/ui';
+import { GlassSurface } from '@shared/ui/glass-surface';
+import type { LucideIcon } from '@shared/ui/icons';
+import { TrendBadge } from '@shared/ui/trend-badge';
 
 interface MetricCardProps {
   dailyActivity?: DailyActivityPoint[];
-  icon: ComponentType<LucideProps>;
+  icon: LucideIcon;
   metric: HealthMetric;
   visual?: 'steps' | 'calories' | 'workouts' | 'weight';
   workouts?: WorkoutSession[];

@@ -1,8 +1,8 @@
 import type { HTMLAttributes } from 'react';
-import { ArrowDown, ArrowUp, Minus } from 'lucide-react';
 
 import type { TrendSignal } from '@entities/health-metric';
 import { cn } from '@shared/lib';
+import { ArrowDown, ArrowUp, Minus } from '@shared/ui/icons';
 
 interface TrendBadgeProps extends HTMLAttributes<HTMLSpanElement> {
   trend: Pick<TrendSignal, 'direction' | 'label' | 'sentiment'>;

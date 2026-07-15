@@ -1,5 +1,3 @@
-/// <reference types="vitest/config" />
-
 import { fileURLToPath, URL } from 'node:url';
 
 import react from '@vitejs/plugin-react';
@@ -26,20 +24,5 @@ export default defineConfig({
   preview: {
     host: '127.0.0.1',
     port: 4173,
-  },
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          charts: ['recharts'],
-        },
-      },
-    },
-  },
-  test: {
-    environment: 'jsdom',
-    globals: true,
-    setupFiles: './vitest.setup.ts',
-    css: true,
   },
 });

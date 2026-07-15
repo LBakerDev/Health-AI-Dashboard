@@ -1,9 +1,10 @@
-import { Dumbbell, Timer } from 'lucide-react';
 import { useMemo, useState } from 'react';
 
 import type { WorkoutSession, WorkoutType } from '@entities/health-metric';
 import { formatTime, formatWorkoutType } from '@shared/lib';
-import { GlassSurface, SegmentedControl } from '@shared/ui';
+import { GlassSurface } from '@shared/ui/glass-surface';
+import { Dumbbell, Timer } from '@shared/ui/icons';
+import { SegmentedControl } from '@shared/ui/segmented-control';
 
 interface WorkoutListProps {
   workouts: WorkoutSession[];

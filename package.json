@@ -5,13 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1 --port 4173",
-    "build": "tsc -b && vite build",
+    "build": "npm run typecheck && vite build",
     "preview": "vite preview --host 127.0.0.1 --port 4173",
-    "lint": "eslint .",
+    "lint": "eslint eslint.config.js public/service-worker.js",
+    "typecheck": "tsc -p tsconfig.runtime.json --pretty false && tsc -p tsconfig.test.json --pretty false",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "test": "vitest run --config vitest.config.ts",
+    "test:watch": "vitest --config vitest.config.ts"
   },
   "dependencies": {
     "clsx": "^2.1.1",
@@ -19,13 +20,10 @@
     "lucide-react": "^0.468.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-is": "^19.2.7",
-    "recharts": "^3.9.0",
     "zustand": "^5.0.0"
   },
   "devDependencies": {
     "@eslint/js": "9.39.4",
-    "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
     "@testing-library/user-event": "^14.5.2",
     "@types/node": "^22.10.2",
@@ -36,11 +34,10 @@
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.16",
     "globals": "^15.14.0",
-    "jsdom": "^25.0.1",
+    "happy-dom": "^20.10.6",
     "prettier": "^3.4.2",
-    "typescript": "^5.7.2",
-    "typescript-eslint": "8.46.3",
+    "typescript": "5.7.3",
     "vite": "^6.4.3",
-    "vitest": "^4.1.9"
+    "vitest": "^3.2.4"
   }
 }

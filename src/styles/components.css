@@ -370,6 +370,58 @@
   height: 230px;
 }
 
+.activity-chart svg,
+.trend-chart svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.chart-grid-line {
+  stroke: var(--color-border-muted);
+  stroke-dasharray: 4 8;
+  stroke-linecap: round;
+}
+
+.chart-area {
+  opacity: 0.95;
+}
+
+.chart-line {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3.4;
+}
+
+.chart-line--energy {
+  stroke: var(--color-energy);
+}
+
+.chart-point {
+  filter: drop-shadow(0 0 8px rgb(255 255 255 / 0.24));
+}
+
+.chart-bar {
+  fill: var(--color-cardio);
+  opacity: 0.86;
+}
+
+.chart-axis-label {
+  fill: var(--color-ink-muted);
+  font-size: 0.72rem;
+  font-weight: 720;
+}
+
+.chart-axis-label--center {
+  text-anchor: middle;
+}
+
+.chart-axis-label--end {
+  text-anchor: end;
+}
+
 .module-stack {
   display: grid;
   gap: var(--space-4);

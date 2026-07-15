@@ -1,0 +1,47 @@
+import type { LucideIcon as LucideReactIcon } from 'lucide-react';
+
+import ActivityIcon from 'lucide-react/dist/esm/icons/activity.js';
+import ArrowDownIcon from 'lucide-react/dist/esm/icons/arrow-down.js';
+import ArrowLeftIcon from 'lucide-react/dist/esm/icons/arrow-left.js';
+import ArrowRightIcon from 'lucide-react/dist/esm/icons/arrow-right.js';
+import ArrowUpIcon from 'lucide-react/dist/esm/icons/arrow-up.js';
+import BrainIcon from 'lucide-react/dist/esm/icons/brain.js';
+import CheckCircle2Icon from 'lucide-react/dist/esm/icons/check-circle-2.js';
+import DumbbellIcon from 'lucide-react/dist/esm/icons/dumbbell.js';
+import FileArchiveIcon from 'lucide-react/dist/esm/icons/file-archive.js';
+import FlameIcon from 'lucide-react/dist/esm/icons/flame.js';
+import FootprintsIcon from 'lucide-react/dist/esm/icons/footprints.js';
+import HeartPulseIcon from 'lucide-react/dist/esm/icons/heart-pulse.js';
+import LoaderCircleIcon from 'lucide-react/dist/esm/icons/loader-circle.js';
+import LockIcon from 'lucide-react/dist/esm/icons/lock.js';
+import MinusIcon from 'lucide-react/dist/esm/icons/minus.js';
+import MoonIcon from 'lucide-react/dist/esm/icons/moon.js';
+import ScaleIcon from 'lucide-react/dist/esm/icons/scale.js';
+import TimerIcon from 'lucide-react/dist/esm/icons/timer.js';
+import TrendingDownIcon from 'lucide-react/dist/esm/icons/trending-down.js';
+import WavesIcon from 'lucide-react/dist/esm/icons/waves.js';
+import XIcon from 'lucide-react/dist/esm/icons/x.js';
+
+export type LucideIcon = LucideReactIcon;
+
+export const Activity = ActivityIcon as LucideIcon;
+export const ArrowDown = ArrowDownIcon as LucideIcon;
+export const ArrowLeft = ArrowLeftIcon as LucideIcon;
+export const ArrowRight = ArrowRightIcon as LucideIcon;
+export const ArrowUp = ArrowUpIcon as LucideIcon;
+export const Brain = BrainIcon as LucideIcon;
+export const CheckCircle2 = CheckCircle2Icon as LucideIcon;
+export const Dumbbell = DumbbellIcon as LucideIcon;
+export const FileArchive = FileArchiveIcon as LucideIcon;
+export const Flame = FlameIcon as LucideIcon;
+export const Footprints = FootprintsIcon as LucideIcon;
+export const HeartPulse = HeartPulseIcon as LucideIcon;
+export const LoaderCircle = LoaderCircleIcon as LucideIcon;
+export const Lock = LockIcon as LucideIcon;
+export const Minus = MinusIcon as LucideIcon;
+export const Moon = MoonIcon as LucideIcon;
+export const Scale = ScaleIcon as LucideIcon;
+export const Timer = TimerIcon as LucideIcon;
+export const TrendingDown = TrendingDownIcon as LucideIcon;
+export const Waves = WavesIcon as LucideIcon;
+export const X = XIcon as LucideIcon;

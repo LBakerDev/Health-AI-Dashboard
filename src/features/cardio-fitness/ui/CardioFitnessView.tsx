@@ -1,7 +1,6 @@
-import { ArrowLeft } from 'lucide-react';
-
 import type { Mvp1DashboardPayload } from '@entities/health-metric';
-import { Button } from '@shared/ui';
+import { Button } from '@shared/ui/button';
+import { ArrowLeft } from '@shared/ui/icons';
 
 import { CardioMetricStrip } from './CardioMetricStrip';
 import { CardioTrendCharts } from './CardioTrendCharts';

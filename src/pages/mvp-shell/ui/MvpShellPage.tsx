@@ -1,4 +1,3 @@
-import { Activity } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 import { APP_NAME } from '@shared/config';
@@ -6,7 +5,9 @@ import { mvp1DashboardPayload } from '@data/mock';
 import { CardioFitnessView } from '@features/cardio-fitness';
 import { ImportHealthDataDialog, ParsingOverlay } from '@features/import-health-data';
 import { WeeklySummaryView } from '@features/weekly-summary';
-import { GlassSurface, SegmentedControl } from '@shared/ui';
+import { GlassSurface } from '@shared/ui/glass-surface';
+import { Activity } from '@shared/ui/icons';
+import { SegmentedControl } from '@shared/ui/segmented-control';
 
 type DashboardView = 'weekly' | 'cardio';
 type ImportFlowState = 'closed' | 'dialog' | 'parsing';
@@ -20,8 +21,18 @@ const importStages = [
   { label: 'Dashboard ready.', progress: 100 },
 ];
 
+function getInitialDashboardView(): DashboardView {
+  if (typeof window === 'undefined') {
+    return 'weekly';
+  }
+
+  const view = new URLSearchParams(window.location.search).get('view');
+
+  return view === 'cardio' ? 'cardio' : 'weekly';
+}
+
 export function MvpShellPage() {
-  const [activeView, setActiveView] = useState<DashboardView>('weekly');
+  const [activeView, setActiveView] = useState<DashboardView>(getInitialDashboardView);
   const [importFlow, setImportFlow] = useState<ImportFlowState>('closed');
   const [importStageIndex, setImportStageIndex] = useState(0);
   const [weekRange, setWeekRange] = useState<WeekRange>('this-week');

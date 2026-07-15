@@ -1,8 +1,7 @@
-import { Brain, CheckCircle2 } from 'lucide-react';
-
 import type { Mvp1DashboardPayload } from '@entities/health-metric';
 import { formatMetricValue } from '@shared/lib';
-import { GlassSurface } from '@shared/ui';
+import { GlassSurface } from '@shared/ui/glass-surface';
+import { Brain, CheckCircle2 } from '@shared/ui/icons';
 
 interface InsightCardProps {
   payload: Mvp1DashboardPayload;

@@ -1,8 +1,8 @@
-import { Activity, HeartPulse, Timer, Waves } from 'lucide-react';
-
 import type { CardioFitnessSummary, HealthMetric } from '@entities/health-metric';
 import { formatMetricUnit, formatMetricValue } from '@shared/lib';
-import { GlassSurface, TrendBadge } from '@shared/ui';
+import { GlassSurface } from '@shared/ui/glass-surface';
+import { Activity, HeartPulse, Timer, Waves } from '@shared/ui/icons';
+import { TrendBadge } from '@shared/ui/trend-badge';
 
 const iconByMetricId = {
   'cardio.workoutHr.avg': Activity,

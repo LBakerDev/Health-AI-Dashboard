@@ -1,3 +1,5 @@
+// @vitest-environment happy-dom
+
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
@@ -14,15 +16,14 @@ describe('shared UI primitives', () => {
 
     const surface = screen.getByText('Insight surface').closest('.glass-surface');
 
-    expect(surface).toHaveAttribute('data-tone', 'insight');
-    expect(surface).toHaveAttribute('data-interactive', 'true');
+    expect(surface?.getAttribute('data-tone')).toBe('insight');
+    expect(surface?.getAttribute('data-interactive')).toBe('true');
   });
 
   it('renders a tactile button with the requested variant', () => {
     render(<Button variant="primary">Import data</Button>);
 
-    expect(screen.getByRole('button', { name: /import data/i })).toHaveAttribute(
-      'data-variant',
+    expect(screen.getByRole('button', { name: /import data/i }).getAttribute('data-variant')).toBe(
       'primary',
     );
   });
@@ -38,7 +39,7 @@ describe('shared UI primitives', () => {
       />,
     );
 
-    expect(screen.getByText('-2 bpm')).toHaveAttribute('data-sentiment', 'good');
+    expect(screen.getByText('-2 bpm').getAttribute('data-sentiment')).toBe('good');
   });
 
   it('calls back when a segmented control option is selected', async () => {

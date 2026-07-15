@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">Health AI Dashboard</title>
+  <defs>
+    <linearGradient id="icon-bg" x1="80" x2="432" y1="54" y2="458" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#806CFF" />
+      <stop offset="0.48" stop-color="#139EC4" />
+      <stop offset="1" stop-color="#4AD39D" />
+    </linearGradient>
+    <radialGradient id="icon-glow" cx="0" cy="0" r="1" gradientTransform="matrix(236 0 0 236 392 102)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity="0.72" />
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="#05071E" />
+  <rect x="32" y="32" width="448" height="448" rx="96" fill="url(#icon-bg)" />
+  <rect x="32" y="32" width="448" height="448" rx="96" fill="url(#icon-glow)" />
+  <path d="M116 274h66l34-84 78 164 42-80h60" fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="34" />
+  <circle cx="256" cy="256" r="168" fill="none" stroke="#FFFFFF" stroke-opacity="0.24" stroke-width="18" />
+</svg>

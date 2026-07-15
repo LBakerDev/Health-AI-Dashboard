@@ -1,5 +1,5 @@
 import type { HeartRateZone } from '@entities/health-metric';
-import { GlassSurface } from '@shared/ui';
+import { GlassSurface } from '@shared/ui/glass-surface';
 
 interface ZoneDistributionProps {
   zones: HeartRateZone[];

@@ -1,0 +1,38 @@
+{
+  "id": "/",
+  "name": "Health AI Dashboard",
+  "short_name": "Health AI",
+  "description": "A private weekly health dashboard for conditioning, fat-loss progress, and recovery signals.",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "browser"],
+  "orientation": "portrait",
+  "background_color": "#03061a",
+  "theme_color": "#03061a",
+  "categories": ["health", "fitness", "productivity"],
+  "icons": [
+    {
+      "src": "/app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Weekly Summary",
+      "short_name": "Weekly",
+      "description": "Open the current weekly health summary.",
+      "url": "/?source=shortcut&view=weekly",
+      "icons": [{ "src": "/app-icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "Cardio Fitness",
+      "short_name": "Cardio",
+      "description": "Open cardio fitness trends and workout zones.",
+      "url": "/?source=shortcut&view=cardio",
+      "icons": [{ "src": "/app-icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    }
+  ]
+}

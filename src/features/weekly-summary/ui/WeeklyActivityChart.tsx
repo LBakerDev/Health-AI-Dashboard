@@ -1,32 +1,54 @@
-import {
-  Bar,
-  CartesianGrid,
-  ComposedChart,
-  Line,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from 'recharts';
-
 import type { DailyActivityPoint } from '@entities/health-metric';
 import { formatWeekday } from '@shared/lib';
-import { GlassSurface } from '@shared/ui';
+import { GlassSurface } from '@shared/ui/glass-surface';
 
 interface WeeklyActivityChartProps {
   points: DailyActivityPoint[];
 }
 
-const chartDataKey = {
-  steps: 'steps',
-  activeCalories: 'activeCalories',
-} as const;
+const activityChartWidth = 420;
+const activityChartHeight = 220;
+const activityChartPadding = {
+  bottom: 30,
+  left: 10,
+  right: 10,
+  top: 18,
+};
+
+function toLinePath(points: Array<{ x: number; y: number }>) {
+  return points
+    .map((point, index) => {
+      const command = index === 0 ? 'M' : 'L';
+      return `${command} ${point.x.toFixed(1)} ${point.y.toFixed(1)}`;
+    })
+    .join(' ');
+}
 
 export function WeeklyActivityChart({ points }: WeeklyActivityChartProps) {
   const data = points.map((point) => ({
     ...point,
     day: formatWeekday(point.date),
   }));
+  const stepsMax = Math.max(...data.map((point) => point.steps));
+  const calories = data.map((point) => point.activeCalories);
+  const caloriesMin = Math.min(...calories);
+  const caloriesMax = Math.max(...calories);
+  const caloriesRange = caloriesMax - caloriesMin || 1;
+  const drawableWidth = activityChartWidth - activityChartPadding.left - activityChartPadding.right;
+  const drawableHeight =
+    activityChartHeight - activityChartPadding.top - activityChartPadding.bottom;
+  const bandWidth = drawableWidth / Math.max(data.length, 1);
+  const barWidth = Math.min(34, bandWidth * 0.54);
+  const caloriePoints = data.map((point, index) => {
+    const x = activityChartPadding.left + index * bandWidth + bandWidth / 2;
+    const y =
+      activityChartPadding.top +
+      drawableHeight -
+      ((point.activeCalories - caloriesMin) / caloriesRange) * drawableHeight;
+
+    return { x, y };
+  });
+  const caloriePath = toLinePath(caloriePoints);
 
   return (
     <GlassSurface className="chart-panel" tone="solid">
@@ -38,46 +60,52 @@ export function WeeklyActivityChart({ points }: WeeklyActivityChartProps) {
         <p>Steps and active calories across the week.</p>
       </div>
       <div className="activity-chart" aria-label="Daily steps and active calories chart">
-        <ResponsiveContainer height="100%" width="100%">
-          <ComposedChart data={data} margin={{ bottom: 0, left: -18, right: 0, top: 14 }}>
-            <CartesianGrid
-              stroke="var(--color-border-muted)"
-              strokeDasharray="4 8"
-              vertical={false}
-            />
-            <XAxis
-              axisLine={false}
-              dataKey="day"
-              tick={{ fill: 'var(--color-ink-muted)', fontSize: 12 }}
-              tickLine={false}
-            />
-            <YAxis axisLine={false} tick={false} tickLine={false} width={28} />
-            <Tooltip
-              contentStyle={{
-                background: 'var(--color-surface-strong)',
-                border: '1px solid var(--glass-border)',
-                borderRadius: 16,
-                boxShadow: 'var(--shadow-glass)',
-                color: 'var(--color-ink)',
-              }}
-              cursor={{ fill: 'rgba(79, 110, 247, 0.08)' }}
-            />
-            <Bar
-              dataKey={chartDataKey.steps}
-              fill="var(--color-cardio)"
-              name="Steps"
-              radius={[8, 8, 4, 4]}
-            />
-            <Line
-              dataKey={chartDataKey.activeCalories}
-              dot={false}
-              name="Active calories"
-              stroke="var(--color-energy)"
-              strokeWidth={3}
-              type="monotone"
-            />
-          </ComposedChart>
-        </ResponsiveContainer>
+        <svg role="img" viewBox={`0 0 ${activityChartWidth} ${activityChartHeight}`}>
+          <title>Daily steps and active calories across the week</title>
+          {[0, 1, 2].map((line) => {
+            const y =
+              activityChartPadding.top +
+              (line / 2) *
+                (activityChartHeight - activityChartPadding.top - activityChartPadding.bottom);
+
+            return (
+              <line
+                className="chart-grid-line"
+                key={line}
+                x1={activityChartPadding.left}
+                x2={activityChartWidth - activityChartPadding.right}
+                y1={y}
+                y2={y}
+              />
+            );
+          })}
+          {data.map((point, index) => {
+            const x = activityChartPadding.left + index * bandWidth + (bandWidth - barWidth) / 2;
+            const barHeight = Math.max(18, (point.steps / stepsMax) * drawableHeight);
+            const y = activityChartPadding.top + drawableHeight - barHeight;
+
+            return (
+              <g key={point.date}>
+                <rect
+                  className="chart-bar"
+                  height={barHeight}
+                  rx="8"
+                  width={barWidth}
+                  x={x}
+                  y={y}
+                />
+                <text
+                  className="chart-axis-label chart-axis-label--center"
+                  x={x + barWidth / 2}
+                  y={activityChartHeight - 7}
+                >
+                  {point.day}
+                </text>
+              </g>
+            );
+          })}
+          <path className="chart-line chart-line--energy" d={caloriePath} />
+        </svg>
       </div>
     </GlassSurface>
   );

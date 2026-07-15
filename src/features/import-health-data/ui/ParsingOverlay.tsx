@@ -1,6 +1,5 @@
-import { CheckCircle2, LoaderCircle } from 'lucide-react';
-
-import { GlassSurface } from '@shared/ui';
+import { GlassSurface } from '@shared/ui/glass-surface';
+import { CheckCircle2, LoaderCircle } from '@shared/ui/icons';
 
 interface ParsingOverlayProps {
   label: string;

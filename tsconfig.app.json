@@ -17,6 +17,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "ignoreDeprecations": "6.0",
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
@@ -24,11 +25,12 @@
       "@data/*": ["src/data/*"],
       "@entities/*": ["src/entities/*"],
       "@features/*": ["src/features/*"],
+      "lucide-react/dist/esm/icons/*.js": ["src/shared/types/lucide-react-icons.d.ts"],
       "@pages/*": ["src/pages/*"],
       "@shared/*": ["src/shared/*"],
       "@styles/*": ["src/styles/*"]
     },
-    "types": ["vitest/globals", "@testing-library/jest-dom"]
+    "types": ["vitest/globals"]
   },
   "include": ["src"]
 }

@@ -1,6 +1,13 @@
-import { Activity, Flame, Footprints, HeartPulse, Moon, Scale, TrendingDown } from 'lucide-react';
-
 import type { Mvp1DashboardPayload } from '@entities/health-metric';
+import {
+  Activity,
+  Flame,
+  Footprints,
+  HeartPulse,
+  Moon,
+  Scale,
+  TrendingDown,
+} from '@shared/ui/icons';
 
 import { InsightCard } from './InsightCard';
 import { MetricCard } from './MetricCard';
