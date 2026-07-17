@@ -78,7 +78,7 @@
 }
 
 .dashboard-tabs button {
-  min-height: 38px;
+  min-height: 44px;
   border: 0;
   border-radius: var(--radius-pill);
   padding: 0.5rem 0.82rem;
@@ -904,7 +904,7 @@ h1 {
 }
 
 .segmented-control__option {
-  min-height: 36px;
+  min-height: 44px;
   border: 0;
   border-radius: var(--radius-pill);
   padding: 0.48rem 0.82rem;
@@ -1271,6 +1271,16 @@ h1 {
   color: rgba(160, 168, 207, 0.62);
   font-size: 0.86rem;
   text-align: center;
+}
+
+@media (max-width: 900px) {
+  .dashboard-grid--split {
+    grid-template-columns: 1fr;
+  }
+
+  .tactile-button[data-size='sm'] {
+    min-height: 44px;
+  }
 }
 
 @media (max-width: 640px) {
