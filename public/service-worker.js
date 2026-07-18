@@ -1,14 +1,28 @@
-const CACHE_NAME = 'health-ai-dashboard-v1';
-const APP_SHELL = ['/', '/manifest.webmanifest', '/app-icon.svg'];
+const CACHE_NAME = 'health-ai-dashboard-v3';
+const STATIC_ASSETS = [
+  '/manifest.webmanifest',
+  '/app-icon.svg',
+  '/app-icon-192.png',
+  '/app-icon-512.png',
+  '/apple-touch-icon.png',
+];
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches
-      .open(CACHE_NAME)
-      .then((cache) => cache.addAll(APP_SHELL))
-      .then(() => self.skipWaiting()),
-  );
+  event.waitUntil(precacheAppShell().then(() => self.skipWaiting()));
 });
+
+async function precacheAppShell() {
+  const cache = await caches.open(CACHE_NAME);
+  const shellResponse = await fetch(new Request('/', { cache: 'reload' }));
+  const shellHtml = await shellResponse.clone().text();
+  const buildAssetUrls = Array.from(
+    shellHtml.matchAll(/(?:src|href)="([^"]*\/assets\/[^"]+\.(?:js|css))"/g),
+    (match) => match[1],
+  );
+
+  await cache.put('/', shellResponse);
+  await cache.addAll([...STATIC_ASSETS, ...buildAssetUrls]);
+}
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
@@ -34,7 +48,18 @@ self.addEventListener('fetch', (event) => {
   }
 
   if (request.mode === 'navigate') {
-    event.respondWith(fetch(request).catch(() => caches.match('/')));
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          if (response.ok) {
+            const responseClone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put('/', responseClone));
+          }
+
+          return response;
+        })
+        .catch(() => caches.match('/')),
+    );
     return;
   }
 

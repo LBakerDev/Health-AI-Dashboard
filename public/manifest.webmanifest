@@ -13,6 +13,18 @@
   "categories": ["health", "fitness", "productivity"],
   "icons": [
     {
+      "src": "/app-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/app-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
       "src": "/app-icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
@@ -25,14 +37,14 @@
       "short_name": "Weekly",
       "description": "Open the current weekly health summary.",
       "url": "/?source=shortcut&view=weekly",
-      "icons": [{ "src": "/app-icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+      "icons": [{ "src": "/app-icon-192.png", "sizes": "192x192", "type": "image/png" }]
     },
     {
       "name": "Cardio Fitness",
       "short_name": "Cardio",
       "description": "Open cardio fitness trends and workout zones.",
       "url": "/?source=shortcut&view=cardio",
-      "icons": [{ "src": "/app-icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+      "icons": [{ "src": "/app-icon-192.png", "sizes": "192x192", "type": "image/png" }]
     }
   ]
 }
