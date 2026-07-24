@@ -45,7 +45,7 @@ function MetricVisual({
 
   if (visual === 'calories' && dailyActivity) {
     const values = dailyActivity.map((point) => point.activeCalories);
-    const max = Math.max(...values);
+    const max = Math.max(...values, 1);
 
     return (
       <div className="metric-card__spark metric-card__spark--bars" aria-hidden="true">

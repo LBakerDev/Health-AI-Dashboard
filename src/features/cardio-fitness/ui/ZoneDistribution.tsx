@@ -6,7 +6,7 @@ interface ZoneDistributionProps {
 }
 
 export function ZoneDistribution({ zones }: ZoneDistributionProps) {
-  const maxMinutes = Math.max(...zones.map((zone) => zone.minutes));
+  const maxMinutes = Math.max(...zones.map((zone) => zone.minutes), 1);
   const targetMinutes = zones
     .filter((zone) => zone.target)
     .reduce((total, zone) => total + zone.minutes, 0);

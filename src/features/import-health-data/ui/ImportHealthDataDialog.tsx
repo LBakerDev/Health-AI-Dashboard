@@ -1,21 +1,43 @@
+import { useId, useRef, useState } from 'react';
+
 import { Button } from '@shared/ui/button';
 import { GlassSurface } from '@shared/ui/glass-surface';
 import { FileArchive, Lock, X } from '@shared/ui/icons';
 
 interface ImportHealthDataDialogProps {
+  errorMessage?: string | null;
+  lastImportLabel?: string | null;
   onClose: () => void;
-  onStartImport: () => void;
+  onResetSample?: () => void;
+  onStartImport: (file: File) => void;
   open: boolean;
+  showResetSample?: boolean;
 }
 
 export function ImportHealthDataDialog({
+  errorMessage,
+  lastImportLabel,
   onClose,
+  onResetSample,
   onStartImport,
   open,
+  showResetSample = false,
 }: ImportHealthDataDialogProps) {
+  const inputId = useId();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [dragActive, setDragActive] = useState(false);
+
   if (!open) {
     return null;
   }
+
+  const importFile = (file: File | undefined) => {
+    if (!file) {
+      return;
+    }
+
+    onStartImport(file);
+  };
 
   return (
     <div className="modal-backdrop" role="presentation">
@@ -41,17 +63,60 @@ export function ImportHealthDataDialog({
         <p className="eyebrow">Local import</p>
         <h2 id="import-title">Import Apple Health data</h2>
         <p>
-          Drop an Apple Health export when the parser is wired. This prototype keeps the action
-          local and shows the expected loading path.
+          Choose export.xml from your Apple Health export and the dashboard will parse it locally on
+          this device.
         </p>
-        <button className="dropzone" onClick={onStartImport} type="button">
+        {lastImportLabel ? <p className="import-dialog__meta">{lastImportLabel}</p> : null}
+        <label
+          className="dropzone"
+          data-dragging={dragActive || undefined}
+          htmlFor={inputId}
+          onDragEnter={(event) => {
+            event.preventDefault();
+            setDragActive(true);
+          }}
+          onDragLeave={(event) => {
+            event.preventDefault();
+            setDragActive(false);
+          }}
+          onDragOver={(event) => {
+            event.preventDefault();
+            setDragActive(true);
+          }}
+          onDrop={(event) => {
+            event.preventDefault();
+            setDragActive(false);
+            importFile(event.dataTransfer.files[0]);
+          }}
+        >
           <FileArchive size={24} strokeWidth={2} />
-          <span>Drop export.zip or export.xml</span>
-          <small>Click to simulate parsing sample data</small>
-        </button>
-        <Button onClick={onStartImport} variant="primary">
-          Parse my data
-        </Button>
+          <span>Drop export.xml</span>
+          <small>Tap to choose from Files · ZIP support next</small>
+        </label>
+        <input
+          accept=".zip,.xml,application/zip,application/xml,text/xml"
+          aria-label="Choose Apple Health export file"
+          className="visually-hidden"
+          id={inputId}
+          onChange={(event) => importFile(event.target.files?.[0])}
+          ref={fileInputRef}
+          type="file"
+        />
+        {errorMessage ? (
+          <p className="import-dialog__error" role="alert">
+            {errorMessage}
+          </p>
+        ) : null}
+        <div className="import-dialog__actions">
+          <Button onClick={() => fileInputRef.current?.click()} variant="primary">
+            Choose export file
+          </Button>
+          {showResetSample ? (
+            <Button onClick={onResetSample} variant="secondary">
+              Use sample data
+            </Button>
+          ) : null}
+        </div>
         <p className="privacy-note">
           <Lock size={14} strokeWidth={2.2} />
           Parsed on this device, never uploaded.

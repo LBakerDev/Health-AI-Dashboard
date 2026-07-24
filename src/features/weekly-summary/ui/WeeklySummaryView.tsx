@@ -113,9 +113,20 @@ export function WeeklySummaryView({ onOpenCardio, payload }: WeeklySummaryViewPr
         </div>
       </div>
 
-      <p className="data-footnote">
-        Data parsed locally from your Apple Health export · never uploaded · last import 2 hrs ago
-      </p>
+      <p className="data-footnote">{buildDataFootnote(payload)}</p>
     </section>
   );
+}
+
+function buildDataFootnote(payload: Mvp1DashboardPayload) {
+  if (payload.importSummary.status === 'sample' || !payload.importSummary.importedAt) {
+    return 'Sample data is active · import Apple Health to replace it · never uploaded';
+  }
+
+  const importDate = new Intl.DateTimeFormat('en-US', {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  }).format(new Date(payload.importSummary.importedAt));
+
+  return `Data parsed locally from ${payload.importSummary.sourceLabel} · never uploaded · imported ${importDate}`;
 }

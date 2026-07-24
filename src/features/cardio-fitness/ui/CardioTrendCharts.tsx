@@ -62,9 +62,11 @@ function TrendChart({
 }) {
   const points = buildTrendPoints(data);
   const linePath = toLinePath(points);
-  const areaPath = `${linePath} L ${points.at(-1)?.x.toFixed(1) ?? chartPadding.left} ${
-    chartHeight - chartPadding.bottom
-  } L ${points[0]?.x.toFixed(1) ?? chartPadding.left} ${chartHeight - chartPadding.bottom} Z`;
+  const areaPath = points.length
+    ? `${linePath} L ${points.at(-1)?.x.toFixed(1) ?? chartPadding.left} ${
+        chartHeight - chartPadding.bottom
+      } L ${points[0]?.x.toFixed(1) ?? chartPadding.left} ${chartHeight - chartPadding.bottom} Z`
+    : '';
   const firstPoint = points[0];
   const lastPoint = points.at(-1);
 
@@ -102,8 +104,10 @@ function TrendChart({
               />
             );
           })}
-          <path className="chart-area" d={areaPath} fill={`url(#${gradientId})`} />
-          <path className="chart-line" d={linePath} stroke={color} />
+          {areaPath ? (
+            <path className="chart-area" d={areaPath} fill={`url(#${gradientId})`} />
+          ) : null}
+          {linePath ? <path className="chart-line" d={linePath} stroke={color} /> : null}
           {lastPoint ? (
             <circle
               className="chart-point"

@@ -1,9 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
+import type { Mvp1DashboardPayload } from '@entities/health-metric';
 import { APP_NAME } from '@shared/config';
 import { mvp1DashboardPayload } from '@data/mock';
 import { CardioFitnessView } from '@features/cardio-fitness';
-import { ImportHealthDataDialog, ParsingOverlay } from '@features/import-health-data';
+import {
+  clearStoredDashboardPayload,
+  importHealthDataFile,
+  ImportHealthDataDialog,
+  ParsingOverlay,
+  readStoredDashboardPayload,
+  writeStoredDashboardPayload,
+} from '@features/import-health-data';
+import type { ImportProgress } from '@features/import-health-data';
 import { WeeklySummaryView } from '@features/weekly-summary';
 import { GlassSurface } from '@shared/ui/glass-surface';
 import { Activity } from '@shared/ui/icons';
@@ -13,13 +22,7 @@ type DashboardView = 'weekly' | 'cardio';
 type ImportFlowState = 'closed' | 'dialog' | 'parsing';
 type WeekRange = 'this-week' | 'last-week';
 
-const importStages = [
-  { label: 'Reading Apple Health records...', progress: 14 },
-  { label: 'De-duplicating overlapping Watch, iPhone, and Peloton sources...', progress: 42 },
-  { label: 'Aggregating daily and weekly rollups...', progress: 68 },
-  { label: 'Preparing the weekly insight...', progress: 91 },
-  { label: 'Dashboard ready.', progress: 100 },
-];
+const initialImportProgress = { label: 'Waiting for Apple Health export...', progress: 0 };
 
 function getInitialDashboardView(): DashboardView {
   if (typeof window === 'undefined') {
@@ -33,36 +36,44 @@ function getInitialDashboardView(): DashboardView {
 
 export function MvpShellPage() {
   const [activeView, setActiveView] = useState<DashboardView>(getInitialDashboardView);
+  const [dashboardPayload, setDashboardPayload] = useState(
+    () => readStoredDashboardPayload() ?? mvp1DashboardPayload,
+  );
+  const [importError, setImportError] = useState<string | null>(null);
   const [importFlow, setImportFlow] = useState<ImportFlowState>('closed');
-  const [importStageIndex, setImportStageIndex] = useState(0);
+  const [importProgress, setImportProgress] = useState<ImportProgress>(initialImportProgress);
   const [weekRange, setWeekRange] = useState<WeekRange>('this-week');
 
-  const importStage = importStages[importStageIndex];
-
-  useEffect(() => {
-    if (importFlow !== 'parsing') {
-      return undefined;
-    }
-
-    if (importStageIndex >= importStages.length - 1) {
-      const doneTimer = window.setTimeout(() => {
-        setImportFlow('closed');
-        setImportStageIndex(0);
-      }, 650);
-
-      return () => window.clearTimeout(doneTimer);
-    }
-
-    const timer = window.setTimeout(() => {
-      setImportStageIndex((stageIndex) => stageIndex + 1);
-    }, 720);
-
-    return () => window.clearTimeout(timer);
-  }, [importFlow, importStageIndex]);
-
-  const startImport = () => {
-    setImportStageIndex(0);
+  const startImport = async (file: File) => {
+    setImportError(null);
+    setImportProgress(initialImportProgress);
     setImportFlow('parsing');
+
+    try {
+      const { payload } = await importHealthDataFile(file, setImportProgress);
+
+      setDashboardPayload(payload);
+      writeStoredDashboardPayload(payload);
+
+      window.setTimeout(() => {
+        setImportFlow('closed');
+      }, 700);
+    } catch (error) {
+      setImportError(error instanceof Error ? error.message : 'Unable to parse this export.');
+      setImportFlow('dialog');
+    }
+  };
+
+  const openImportDialog = () => {
+    setImportError(null);
+    setImportFlow('dialog');
+  };
+
+  const resetToSampleData = () => {
+    clearStoredDashboardPayload();
+    setDashboardPayload(mvp1DashboardPayload);
+    setImportError(null);
+    setImportFlow('closed');
   };
 
   return (
@@ -75,7 +86,7 @@ export function MvpShellPage() {
             </span>
             <div>
               <strong>{APP_NAME}</strong>
-              <span>{mvp1DashboardPayload.weeklySummary.week.label}</span>
+              <span>{dashboardPayload.weeklySummary.week.label}</span>
             </div>
           </div>
 
@@ -92,7 +103,7 @@ export function MvpShellPage() {
             <button
               aria-label="Import health data"
               className="profile-button"
-              onClick={() => setImportFlow('dialog')}
+              onClick={openImportDialog}
               type="button"
             >
               L
@@ -121,27 +132,36 @@ export function MvpShellPage() {
           {activeView === 'weekly' ? (
             <WeeklySummaryView
               onOpenCardio={() => setActiveView('cardio')}
-              payload={mvp1DashboardPayload}
+              payload={dashboardPayload}
             />
           ) : (
-            <CardioFitnessView
-              onBack={() => setActiveView('weekly')}
-              payload={mvp1DashboardPayload}
-            />
+            <CardioFitnessView onBack={() => setActiveView('weekly')} payload={dashboardPayload} />
           )}
         </div>
       </div>
 
       <ImportHealthDataDialog
+        errorMessage={importError}
+        lastImportLabel={getLastImportLabel(dashboardPayload)}
         onClose={() => setImportFlow('closed')}
+        onResetSample={resetToSampleData}
         onStartImport={startImport}
         open={importFlow === 'dialog'}
+        showResetSample={dashboardPayload.importSummary.status !== 'sample'}
       />
       <ParsingOverlay
-        label={importStage.label}
+        label={importProgress.label}
         open={importFlow === 'parsing'}
-        progress={importStage.progress}
+        progress={importProgress.progress}
       />
     </>
   );
+}
+
+function getLastImportLabel(payload: Mvp1DashboardPayload) {
+  if (payload.importSummary.status === 'sample' || !payload.importSummary.importedAt) {
+    return 'Sample mode is active';
+  }
+
+  return `Last import: ${payload.importSummary.sourceLabel}`;
 }
